@@ -17,6 +17,12 @@ export default {
       map: null,
       drawnItems: null,
       drawControl: null,
+      polylineCoordinates: [
+        [23.4241, 53.8478],
+        [23.5241, 53.9478],
+      ],
+      markerCoordinate: [23.5241, 53.9478],
+      markerRotation: 45, // Rotation angle in degrees
     };
   },
   mounted() {
@@ -24,19 +30,14 @@ export default {
   },
   methods: {
     initMap() {
-      console.log('Initializing map...');
-      this.map = L.map('map').setView([23.4241, 53.8478], 7); // Centered at UAE
-      console.log('Map initialized', this.map);
+      this.map = L.map('map').setView([23.4241, 53.8478], 7);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
       }).addTo(this.map);
 
-      console.log('Tile layer added');
-
       this.drawnItems = new L.FeatureGroup();
       this.map.addLayer(this.drawnItems);
-      console.log('Feature group added');
 
       this.drawControl = new L.Control.Draw({
         edit: {
@@ -51,26 +52,49 @@ export default {
         },
       });
       this.map.addControl(this.drawControl);
-      console.log('Draw control added');
 
       this.map.on(L.Draw.Event.CREATED, (event) => {
         const layer = event.layer;
         this.drawnItems.addLayer(layer);
-        console.log('Shape drawn and added to feature group');
       });
+
+      this.addPolylineAndRotatedMarker();
+    },
+    addPolylineAndRotatedMarker() {
+      // Add polyline
+      const polyline = L.polyline(this.polylineCoordinates, { color: 'blue' }).addTo(this.map);
+
+      // Add rotated marker
+      const markerIcon = L.divIcon({
+        className: 'rotated-marker',
+        html: `<div style="transform: rotate(${this.markerRotation}deg);"><img src="https://leafletjs.com/examples/custom-icons/leaf-orange.png" style="width: 32px; height: 32px;" /></div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+
+      const marker = L.marker(this.markerCoordinate, { icon: markerIcon }).addTo(this.map);
     },
   },
 };
 </script>
 
 <style>
+html, body, #app, #map-container, #map {
+  height: 100%;
+  margin: 0;
+}
+
 #map-container {
   height: 100vh; /* Full viewport height */
   display: flex;
   flex-direction: column;
 }
 
-#map { 
+#map {
   flex: 1; /* Take up remaining space */
+}
+
+.rotated-marker img {
+  transform-origin: center;
 }
 </style>
