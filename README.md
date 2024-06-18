@@ -1,24 +1,23 @@
-# vue-leaflet-draw
+# Leaflet Draw Map with Polyline and Rotated Marker
 
-## Project setup
-```
-yarn install
-```
+This project demonstrates how to create a map using Leaflet with the ability to draw shapes and display a polyline with a rotated marker. The map is centered on the United Arab Emirates.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Features
 
-### Compiles and minifies for production
-```
-yarn build
-```
+- Leaflet map centered on the UAE.
+- Draw shapes (polygon, rectangle, circle) on the map.
+- Display a polyline with a rotated marker at the end.
 
-### Lints and fixes files
-```
-yarn lint
-```
+## Setup
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Prerequisites
+
+- Node.js and npm installed.
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/osamaalaa/leaflet-draw-map.git
+cd leaflet-draw-map
